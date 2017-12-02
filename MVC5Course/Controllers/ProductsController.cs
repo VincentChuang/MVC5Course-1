@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using MVC5Course.Models;
+using MVC5Course.ViewModels;
 
 namespace MVC5Course.Controllers
 {
@@ -123,5 +124,19 @@ namespace MVC5Course.Controllers
             }
             base.Dispose(disposing);
         }
+
+        public ActionResult List()
+        {
+            var data = from p in db.Product.Take(10)
+                       select new ProductListVM() {
+                           ProductName = p.ProductName,
+                           ProductId = p.ProductId,
+                           Price = p.Price,
+                           Stock = p.Stock,
+                       };
+
+            return View(data);
+        }
+
     }
 }
