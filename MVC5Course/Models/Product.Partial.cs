@@ -9,10 +9,10 @@ namespace MVC5Course.Models
     public partial class Product : IValidatableObject   //資料模型驗證
     {
         //資料模型驗證 ， 需 extends IValidatableObject
-        //若無發生 
+        //若無  return 錯誤，則視為 驗證 OK
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext) {
-            if (this.Stock < 10 && this.Price > 1000)
-                yield return new ValidationResult("Stock < 10 && price > 100 是 錯誤的資料設定",
+            if (this.Stock < 10 || this.Price > 1000)
+                yield return new ValidationResult("Stock < 10 || price > 1000 是 錯誤的資料設定",
                     new string[] { "Stock", "Price" });
             //throw new NotImplementedException();
         }
