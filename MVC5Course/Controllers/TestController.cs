@@ -20,10 +20,11 @@ namespace MVC5Course.Controllers
             var data = from p in db.Product.Where(x => x.isDelete == false).Take(10)
                        select p;                //所得所有資料
 
-            //保哥 寫法
+            #region 保哥 寫法
             //var data = from p in db.Product
             //           where p.isDelete == false
             //           select p;      //所得所有資料
+            #endregion
 
             return View(data);
         }
