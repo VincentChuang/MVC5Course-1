@@ -24,7 +24,7 @@ namespace MVC5Course.Models.DataTypes
                 return true;
             else
                 return false;
-            return base.IsValid(value);
+            //return base.IsValid(value);
         }
 
 

@@ -25,7 +25,7 @@ namespace MVC5Course.Models
 
         [Required]
         [StringLength(80, ErrorMessage="欄位長度不得大於 80 個字元")]
-        [身份證字號] //使用欄位驗證，由 身份證字號Attribute.cs 進行驗證
+        [身份證字號(ErrorMessage ="驗證未包含 Will 字串")] //使用欄位驗證，由 身份證字號Attribute.cs 進行驗證
         public string ProductName { get; set; }
 
         [Required]
