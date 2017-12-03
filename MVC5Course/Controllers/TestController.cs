@@ -92,8 +92,10 @@ namespace MVC5Course.Controllers
                 }
 
                 //int iFect = db.SaveChanges();
-
+                
                 repo.UnitOfWork.Commit();
+
+                TempData["ProductItem"] = updData;
 
                 return RedirectToAction("Index");
             }

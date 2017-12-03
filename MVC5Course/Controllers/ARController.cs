@@ -56,6 +56,20 @@ namespace MVC5Course.Controllers
         }
 
 
+        public ActionResult RedirectTest() {
+            return RedirectToAction("FileTest",new { dl = 1 }) ;
+        }
+        public ActionResult RedirectTest2() {
+            return RedirectToRoute(new { Controller = "Home", Action = "About", id = "123" });
+        }
+
+
+
+
+
+
+
+
 
     }
 }
