@@ -10,7 +10,14 @@ namespace MVC5Course.Controllers
     public class BaseController : Controller
     {
 
-        protected ProductRepository repo = RepositoryHelper.GetProductRepository();
+        protected ProductRepository repo = null;
+        protected OrderLineRepository olRepo = null;
+        
+        //讓 各個 RePository 共用 同一個 Connection
+        public BaseController() {
+            repo = RepositoryHelper.GetProductRepository();
+            olRepo = RepositoryHelper.GetOrderLineRepository(repo.UnitOfWork);
+        }
 
         //阻擋 未知 的 Action，即重導向 首頁
         protected override void HandleUnknownAction(string actionName) {
