@@ -10,10 +10,8 @@ using Omu.ValueInjecter;
 
 namespace MVC5Course.Controllers
 {
-    public class TestController : Controller
-    {
-        //FabricsEntities db = new FabricsEntities();
-        ProductRepository repo = RepositoryHelper.GetProductRepository();
+    public class TestController : BaseController
+    {   
 
         #region Index - 列表
         public ActionResult Index()
