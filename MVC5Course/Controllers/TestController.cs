@@ -17,8 +17,13 @@ namespace MVC5Course.Controllers
         #region Index - 列表
         public ActionResult Index()
         {
-            var data = from p in db.Product.Take(10)
+            var data = from p in db.Product.Where(x => x.isDelete == false).Take(10)
                        select p;                //所得所有資料
+
+            //保哥 寫法
+            //var data = from p in db.Product
+            //           where p.isDelete == false
+            //           select p;      //所得所有資料
 
             return View(data);
         }
@@ -73,13 +78,23 @@ namespace MVC5Course.Controllers
 
         #region Delete - 刪除
         public ActionResult Delete(int id) {
-            var listOrderLine = db.OrderLine.Where(x => x.ProductId == id).ToList();
-            if(listOrderLine!=null && listOrderLine.Count > 0) {
-                db.OrderLine.RemoveRange(listOrderLine);
-            }
+
+            #region 原先寫法，真的刪除資料
+            //var listOrderLine = db.OrderLine.Where(x => x.ProductId == id).ToList();
+            //if(listOrderLine!=null && listOrderLine.Count > 0) {
+            //    db.OrderLine.RemoveRange(listOrderLine);
+            //}
+            //var delP = db.Product.Where(x => x.ProductId == id).FirstOrDefault();
+            //if (delP != null) {
+            //    db.Product.Remove(delP);
+            //}
+            //db.SaveChanges();
+            //return RedirectToAction("Index");
+            #endregion
+
             var delP = db.Product.Where(x => x.ProductId == id).FirstOrDefault();
             if (delP != null) {
-                db.Product.Remove(delP);
+                delP.isDelete = true;
             }
             db.SaveChanges();
             return RedirectToAction("Index");
