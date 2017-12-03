@@ -6,6 +6,8 @@ using System.Web.Mvc;
 
 using MVC5Course.Models;
 
+using Omu.ValueInjecter;
+
 namespace MVC5Course.Controllers
 {
     public class TestController : Controller
@@ -54,11 +56,13 @@ namespace MVC5Course.Controllers
                 var updData = db.Product.Find(id);
                 if (updData != null) {
                     //updData = data;
-                    //updData.ProductId = id;
+                    updData.ProductId = id;
                     updData.ProductName = data.ProductName;
                     updData.Active = data.Active;
                     updData.Price = data.Price;
                     updData.Stock = data.Stock;
+
+                    //updData.inJectFrom(data);
                 }
                 int iFect = db.SaveChanges();
                 return RedirectToAction("Index");
