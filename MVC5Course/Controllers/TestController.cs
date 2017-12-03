@@ -119,15 +119,18 @@ namespace MVC5Course.Controllers
             //return RedirectToAction("Index");
             #endregion
 
+            //不同 Repository 共用 同一個 repo Connection
+            //var olRepo = RepositoryHelper.GetOrderLineRepository(repo.UnitOfWork);
+            //olRepo.Delete(olRepo.All().First(p => p.OrderId == 1));
 
-            //var delP = db.Product.Where(x => x.ProductId == id).FirstOrDefault();
+            //不同 Repository 共用 同一個 repo Connection
+            //var olRepo = new OrderLineRepository();
+            //olRepo.UnitOfWork = repo.UnitOfWork;
+            //olRepo.Delete(olRepo.All().First(p => p.OrderId == 1));
+
             var delP = repo.Find(id);
+            repo.Delete(delP);
 
-            if (delP != null) {
-                delP.isDelete = true;
-            }
-
-            //db.SaveChanges();
             repo.UnitOfWork.Commit();
 
             return RedirectToAction("Index");
@@ -140,7 +143,9 @@ namespace MVC5Course.Controllers
             //var detailP = db.Product.Where(x => x.ProductId == id).FirstOrDefault();
 
             var detailP = repo.Find(id);
-
+            if (detailP == null) {  //當查無資料，返回列表頁
+                return RedirectToAction("Index");
+            }
             return View(detailP);
         }
         #endregion
