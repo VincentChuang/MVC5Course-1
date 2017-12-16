@@ -1,4 +1,9 @@
 ﻿<script>
-    alert('@(Model)');
-    location.href = '/';
+
+    
+    //location.href = '/';
+
+    alert('@(ViewBag.ErrorMsg)');
+    location.href = '@(ViewBag.ReturnPath)';
+
 </script>

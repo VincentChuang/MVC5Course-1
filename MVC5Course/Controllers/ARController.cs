@@ -27,7 +27,9 @@ namespace MVC5Course.Controllers
         }
         //較好的寫法，指定 PartialView 且 在 Shared 中 撰寫共用 JsAlertRedirect.cshtml
         public ActionResult ContentTest_Better() {
+            ViewBag.ErrorMsg = "新增成功";
             return PartialView("JsAlertRedirect", "新增成功");
+            
         }
 
         #endregion

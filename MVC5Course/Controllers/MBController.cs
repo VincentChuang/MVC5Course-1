@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Validation;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -17,7 +18,7 @@ namespace MVC5Course.Controllers
     public class MBController : BaseController {
 
         public ActionResult Index() {
-            var data = repo.Get取得所有尚未刪除的商品資料Top10().Take(2);
+            var data = repo.Get取得所有尚未刪除的商品資料Top10();
             ViewData.Model = data;
             ViewBag.PageTitle = "商品清單";
             return View();
@@ -31,7 +32,25 @@ namespace MVC5Course.Controllers
                     one.Active = item.Active;
                     one.Stock = item.Stock;
                 }
-                repo.UnitOfWork.Commit();
+                try {
+                    repo.UnitOfWork.Commit();
+                } catch (DbEntityValidationException ex) {
+                    //利用DbEntityValidationException抓取ValidationErrors
+                    //如果是用傳統的Exception類別，沒辦法直接在程式碼抓ValidationErrors
+                    string sErrors = "";
+                    foreach (DbEntityValidationResult item in ex.EntityValidationErrors) {
+                        //string entityName = item.Entry.Entity.GetType().Name;
+                        foreach (DbValidationError err in item.ValidationErrors) {
+                            sErrors += ";錯誤欄位：" + err.PropertyName + ",錯誤原因：" + err.ErrorMessage;
+                        }
+                    }
+                    //ViewBag["ErrorMsg"] = sErrors;  //返回驗證錯誤
+                    ViewBag.ErrorMsg = sErrors;     //返回驗證錯誤
+                    ViewBag.ReturnPath = "/MB/Index";     //返回驗證錯誤
+
+                    return PartialView("JsAlertRedirect", sErrors);
+
+                }
                 return RedirectToAction("Index");
             }
             var data = repo.Get取得所有尚未刪除的商品資料Top10();
