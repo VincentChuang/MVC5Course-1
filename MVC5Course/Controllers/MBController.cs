@@ -58,7 +58,16 @@ namespace MVC5Course.Controllers
             ViewBag.PageTitle = "商品清單";
             return View();
         }
-        
+
+        //示範 Action 搭配 編譯 Debug/Release
+        #if !DEBUG
+        [NonAction]
+        #endif
+        public ActionResult Debug()
+        {
+            return View();
+        }
+
 
 
     }

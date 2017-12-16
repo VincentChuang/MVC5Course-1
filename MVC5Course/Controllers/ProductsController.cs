@@ -74,21 +74,39 @@ namespace MVC5Course.Controllers
             return View(product);
         }
 
-        // POST: Products/Edit/5
-        // 若要免於過量張貼攻擊，請啟用想要繫結的特定屬性，如需
-        // 詳細資訊，請參閱 https://go.microsoft.com/fwlink/?LinkId=317598。
+
+        #region Edit - Model Binding 預先載入 範例
+        /*
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult Edit([Bind(Include = "ProductId,ProductName,Price,Active,Stock")] Product product) {
+        ////Bind Include 代表 修改 MVC Model BIND 的特性，只允許填入該值
+        ////Model Binding 過程：先寫入值->輸入驗證->模型驗證。
+        //    if (ModelState.IsValid) {
+        //        db.Entry(product).State = EntityState.Modified;
+        //        db.SaveChanges();
+        //        return RedirectToAction("Index");
+        //    }
+        //    return View(product);
+        //}
+        */
+        #endregion 延遲載入
+        #region Edit - Model Binding 延遲載入驗證 範例
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ProductId,ProductName,Price,Active,Stock")] Product product)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(product).State = EntityState.Modified;
+        public ActionResult Edit(int id) {
+            //Bind Include 代表 修改 MVC Model BIND 的特性，只允許填入該值
+            //Model Binding 過程：先寫入值->輸入驗證->模型驗證。
+            var product = db.Product.Find(id);
+            //使用 Model Binding 延遲載入驗證 範例，進行 TryUpdateModel 才進行 Model Binding
+            if (TryUpdateModel(product,new string[] { "ProductId", "ProductName", "Price", "Active", "Stock" })) {
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
             return View(product);
         }
+        #endregion
+
 
         // GET: Products/Delete/5
         public ActionResult Delete(int? id)
