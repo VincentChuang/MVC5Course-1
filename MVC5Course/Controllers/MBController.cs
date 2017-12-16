@@ -24,6 +24,11 @@ namespace MVC5Course.Controllers
             return View();
         }
         [HttpPost]
+
+        #region 顯示錯誤例外方法： 2.使用 ErrorHandler 擇一使用
+        [HandleError(ExceptionType = typeof(DbEntityValidationException), View = "Error_DbEntityValidationException")]
+        #endregion
+
         public ActionResult Index(MBBatchUpdateVM[] batch) {
             if (ModelState.IsValid) {
                 foreach(var item in batch) {
@@ -32,6 +37,13 @@ namespace MVC5Course.Controllers
                     one.Active = item.Active;
                     one.Stock = item.Stock;
                 }
+
+                #region 顯示錯誤例外方法： 2.使用 ErrorHandler 擇一使用
+                repo.UnitOfWork.Commit();
+                #endregion
+
+                #region 顯示錯誤例外方法： 1.使用 try-catch 補捉 擇一使用
+                /*
                 try {
                     repo.UnitOfWork.Commit();
                 } catch (DbEntityValidationException ex) {
@@ -47,10 +59,11 @@ namespace MVC5Course.Controllers
                     //ViewBag["ErrorMsg"] = sErrors;  //返回驗證錯誤
                     ViewBag.ErrorMsg = sErrors;     //返回驗證錯誤
                     ViewBag.ReturnPath = "/MB/Index";     //返回驗證錯誤
-
                     return PartialView("JsAlertRedirect", sErrors);
-
                 }
+                */
+                #endregion
+
                 return RedirectToAction("Index");
             }
             var data = repo.Get取得所有尚未刪除的商品資料Top10();
