@@ -26,7 +26,12 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Price, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control" } })
+                
+                @Html.DropDownList("Price", null, "--請選擇價格--", new { @class = "form-control" })
+                @*上行是改善寫法，使用下拉選單寫入資料。*@
+                @*下行是原先寫法，產生文字方塊輸入資料。*@
+                @*@Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control" } })*@
+
                 @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
             </div>
         </div>

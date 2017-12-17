@@ -40,6 +40,22 @@ namespace MVC5Course.Controllers
         // GET: Products/Create
         public ActionResult Create()
         {
+            //var items = new List<SelectListItem>();
+            //items.Add(new SelectListItem() { Value = "0", Text = "0" });
+            //items.Add(new SelectListItem() { Value = "10", Text = "10" });
+            //items.Add(new SelectListItem() { Value = "20", Text = "20" });
+            //items.Add(new SelectListItem() { Value = "30", Text = "30" });
+            //ViewBag.Price = new SelectList(items, "Value", "Text");
+
+            #region 產生 下拉選單 使用的資料
+            var price_list = (from p in db.Product
+                              select new {
+                                  Value = p.Price,
+                                  Text = p.Price
+                              }).Distinct().OrderBy(p => p.Value);
+            ViewBag.Price = new SelectList(price_list, "Value", "Text");
+            #endregion
+
             return View();
         }
 
@@ -50,8 +66,16 @@ namespace MVC5Course.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ProductId,ProductName,Price,Active,Stock")] Product product)
         {
-            if (ModelState.IsValid)
-            {
+            #region 產生 下拉選單 使用的資料
+            var price_list = (from p in db.Product
+                              select new {
+                                  Value = p.Price,
+                                  Text = p.Price
+                              }).Distinct().OrderBy(p => p.Value);
+            ViewBag.Price = new SelectList(price_list, "Value", "Text");
+            #endregion
+
+            if (ModelState.IsValid) {
                 db.Product.Add(product);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -72,6 +96,16 @@ namespace MVC5Course.Controllers
             {
                 return HttpNotFound();
             }
+
+            #region 產生 下拉選單 使用的資料
+            var price_list = (from p in db.Product
+                                select new {
+                                    Value = p.Price,
+                                    Text = p.Price
+                                }).Distinct().OrderBy(p => p.Value);
+            ViewBag.Price = new SelectList(price_list, "Value", "Text", product.Price);
+            #endregion
+
             return View(product);
         }
 
@@ -99,6 +133,16 @@ namespace MVC5Course.Controllers
             //Bind Include 代表 修改 MVC Model BIND 的特性，只允許填入該值
             //Model Binding 過程：先寫入值->輸入驗證->模型驗證。
             var product = db.Product.Find(id);
+
+            #region 產生 下拉選單 使用的資料
+            var price_list = (from p in db.Product
+                              select new {
+                                  Value = p.Price,
+                                  Text = p.Price
+                              }).Distinct().OrderBy(p => p.Value);
+            ViewBag.Price = new SelectList(price_list, "Value", "Text", product.Price);
+            #endregion
+
             //使用 Model Binding 延遲載入驗證 範例，進行 TryUpdateModel 才進行 Model Binding
             if (TryUpdateModel(product,new string[] { "ProductId", "ProductName", "Price", "Active", "Stock" })) {
                 db.SaveChanges();
