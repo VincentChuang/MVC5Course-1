@@ -510,6 +510,7 @@
     <Content Include="Views\Shared\EditorTemplates\Client.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\Gender_Template.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\CreditRating_Template.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Editor_Date_Template.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="css\" />
