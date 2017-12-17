@@ -192,6 +192,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MBController.cs" />
+    <Compile Include="Controllers\OrderLinesController.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Global.asax.cs">
@@ -496,6 +497,8 @@
     <Content Include="Views\Home\VT.cshtml" />
     <Content Include="Views\Home\MetroIndex.cshtml" />
     <Content Include="Views\Shared\_Layout.Metro.cshtml" />
+    <Content Include="Views\OrderLines\Index.cshtml" />
+    <Content Include="Views\Products\OrderLinesList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="css\" />

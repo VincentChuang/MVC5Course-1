@@ -29,6 +29,7 @@ namespace MVC5Course.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Product product = db.Product.Find(id);
+            ViewBag.OrderLines = product.OrderLine.Take(5).ToList();
             if (product == null)
             {
                 return HttpNotFound();

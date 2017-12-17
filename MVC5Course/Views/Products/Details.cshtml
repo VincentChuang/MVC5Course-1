@@ -44,6 +44,16 @@
 
     </dl>
 </div>
+
+
+
+================================================================================================
+
+<h4>使用 Html.Partial 部份顯示，實作 OrderLines for @Model.ProductName</h4>
+@Html.Partial("OrderLinesList", (object)ViewBag.OrderLines)
+
+
+
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.ProductId }) |
     @Html.ActionLink("Back to List", "Index")
