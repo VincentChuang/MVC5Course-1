@@ -28,7 +28,7 @@ namespace MVC5Course.Models
         [UIHint("Gender_Template")]
         public string Gender { get; set; }
 
-        [UIHint("Editor_Date_Template")]    //套用編輯Template
+        [UIHint("Date_DisplayEditor_Template")]    //套用編輯Template
         public Nullable<System.DateTime> DateOfBirth { get; set; }
 
         [UIHint("CreditRating_Template")]
