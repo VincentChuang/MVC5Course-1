@@ -103,7 +103,7 @@ namespace MVC5Course.Controllers
                                     Value = p.Price,
                                     Text = p.Price
                                 }).Distinct().OrderBy(p => p.Value);
-            ViewBag.Price = new SelectList(price_list, "Value", "Text", product.Price);
+            ViewBag.Price = new SelectList(price_list, "Value", "Text");
             #endregion
 
             return View(product);
@@ -140,7 +140,7 @@ namespace MVC5Course.Controllers
                                   Value = p.Price,
                                   Text = p.Price
                               }).Distinct().OrderBy(p => p.Value);
-            ViewBag.Price = new SelectList(price_list, "Value", "Text", product.Price);
+            ViewBag.Price = new SelectList(price_list, "Value", "Text");
             #endregion
 
             //使用 Model Binding 延遲載入驗證 範例，進行 TryUpdateModel 才進行 Model Binding
