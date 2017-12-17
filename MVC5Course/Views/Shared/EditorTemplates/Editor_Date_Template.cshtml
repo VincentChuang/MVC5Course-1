@@ -1,12 +1,18 @@
 ﻿@model Nullable<System.DateTime>
+
+@*
+@Html.TextBox("", ((Model == null) ? "" : Model.Value.ToString("yyyy-MM-dd")), new { @class = "form-control text-box single-line" })
+*@
+
 @if (Model.HasValue) {
     @Html.TextBox("", Model.Value.ToString("yyyy-MM-dd"), new { @class = "form-control text-box single-line" })
 } else {
     @Html.TextBox("", null, new { @class = "form-control text-box single-line" })
 }
+
 <script>
     $(function () {
-        $("#@Html.Id("")").datepicker({
+        $("#@Html.Id("")").datepicker({ //利用 後端語法 取得 前端ID
             dateFormat: "yy-mm-dd"
         });
     })
