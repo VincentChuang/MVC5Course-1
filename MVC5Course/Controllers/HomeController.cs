@@ -35,6 +35,12 @@ namespace MVC5Course.Controllers
             return PartialView("VT");
         }
 
+        public ActionResult MetroIndex()
+        {
+            return View();
+        }
+
+
 
     }
 }
