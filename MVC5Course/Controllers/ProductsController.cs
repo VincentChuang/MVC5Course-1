@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using MVC5Course.Models;
 using MVC5Course.ViewModels;
+using MVC5Course.ActionFilters;
 
 namespace MVC5Course.Controllers
 {
@@ -15,13 +16,11 @@ namespace MVC5Course.Controllers
     {
         private FabricsEntities db = new FabricsEntities();
 
-        // GET: Products
         public ActionResult Index()
         {
             return View(db.Product.Take(10).ToList());
         }
 
-        // GET: Products/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -37,7 +36,7 @@ namespace MVC5Course.Controllers
             return View(product);
         }
 
-        // GET: Products/Create
+        [Price下拉選單]
         public ActionResult Create()
         {
             //var items = new List<SelectListItem>();
@@ -47,13 +46,13 @@ namespace MVC5Course.Controllers
             //items.Add(new SelectListItem() { Value = "30", Text = "30" });
             //ViewBag.Price = new SelectList(items, "Value", "Text");
 
-            #region 產生 下拉選單 使用的資料
-            var price_list = (from p in db.Product
-                              select new {
-                                  Value = p.Price,
-                                  Text = p.Price
-                              }).Distinct().OrderBy(p => p.Value);
-            ViewBag.Price = new SelectList(price_list, "Value", "Text");
+            #region 產生 下拉選單 使用的資料，試改用 ActionFilter 傳入，因此下述語法不執行
+            //var price_list = (from p in db.Product
+            //                  select new {
+            //                      Value = p.Price,
+            //                      Text = p.Price
+            //                  }).Distinct().OrderBy(p => p.Value);
+            //ViewBag.Price = new SelectList(price_list, "Value", "Text");
             #endregion
 
             return View();
@@ -63,16 +62,17 @@ namespace MVC5Course.Controllers
         // 若要免於過量張貼攻擊，請啟用想要繫結的特定屬性，如需
         // 詳細資訊，請參閱 https://go.microsoft.com/fwlink/?LinkId=317598。
         [HttpPost]
+        [Price下拉選單]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ProductId,ProductName,Price,Active,Stock")] Product product)
         {
-            #region 產生 下拉選單 使用的資料
-            var price_list = (from p in db.Product
-                              select new {
-                                  Value = p.Price,
-                                  Text = p.Price
-                              }).Distinct().OrderBy(p => p.Value);
-            ViewBag.Price = new SelectList(price_list, "Value", "Text");
+            #region 產生 下拉選單 使用的資料，試改用 ActionFilter 傳入，因此下述語法不執行
+            //var price_list = (from p in db.Product
+            //                  select new {
+            //                      Value = p.Price,
+            //                      Text = p.Price
+            //                  }).Distinct().OrderBy(p => p.Value);
+            //ViewBag.Price = new SelectList(price_list, "Value", "Text");
             #endregion
 
             if (ModelState.IsValid) {
@@ -84,7 +84,7 @@ namespace MVC5Course.Controllers
             return View(product);
         }
 
-        // GET: Products/Edit/5
+        [Price下拉選單]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -97,13 +97,13 @@ namespace MVC5Course.Controllers
                 return HttpNotFound();
             }
 
-            #region 產生 下拉選單 使用的資料
-            var price_list = (from p in db.Product
-                                select new {
-                                    Value = p.Price,
-                                    Text = p.Price
-                                }).Distinct().OrderBy(p => p.Value);
-            ViewBag.Price = new SelectList(price_list, "Value", "Text");
+            #region 產生 下拉選單 使用的資料，試改用 ActionFilter 傳入，因此下述語法不執行
+            //var price_list = (from p in db.Product
+            //                  select new {
+            //                      Value = p.Price,
+            //                      Text = p.Price
+            //                  }).Distinct().OrderBy(p => p.Value);
+            //ViewBag.Price = new SelectList(price_list, "Value", "Text");
             #endregion
 
             return View(product);
@@ -129,18 +129,19 @@ namespace MVC5Course.Controllers
         #region Edit - Model Binding 延遲載入驗證 範例
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Price下拉選單]
         public ActionResult Edit(int id) {
             //Bind Include 代表 修改 MVC Model BIND 的特性，只允許填入該值
             //Model Binding 過程：先寫入值->輸入驗證->模型驗證。
             var product = db.Product.Find(id);
 
-            #region 產生 下拉選單 使用的資料
-            var price_list = (from p in db.Product
-                              select new {
-                                  Value = p.Price,
-                                  Text = p.Price
-                              }).Distinct().OrderBy(p => p.Value);
-            ViewBag.Price = new SelectList(price_list, "Value", "Text");
+            #region 產生 下拉選單 使用的資料，試改用 ActionFilter 傳入，因此下述語法不執行
+            //var price_list = (from p in db.Product
+            //                  select new {
+            //                      Value = p.Price,
+            //                      Text = p.Price
+            //                  }).Distinct().OrderBy(p => p.Value);
+            //ViewBag.Price = new SelectList(price_list, "Value", "Text");
             #endregion
 
             //使用 Model Binding 延遲載入驗證 範例，進行 TryUpdateModel 才進行 Model Binding

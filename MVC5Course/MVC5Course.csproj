@@ -178,6 +178,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ActionFilters\Price下拉選單Attribute.cs" />
     <Compile Include="ActionFilters\LocalOnlyAttribute.cs" />
     <Compile Include="ActionFilters\ShareDataAttribute.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
