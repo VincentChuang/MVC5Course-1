@@ -36,7 +36,7 @@ namespace MVC5Course.Controllers
             return View(product);
         }
 
-        [Price下拉選單]
+        [Price下拉選單] //採用ActionFilter傳入 下拉選單資料
         public ActionResult Create()
         {
             //var items = new List<SelectListItem>();
@@ -62,7 +62,7 @@ namespace MVC5Course.Controllers
         // 若要免於過量張貼攻擊，請啟用想要繫結的特定屬性，如需
         // 詳細資訊，請參閱 https://go.microsoft.com/fwlink/?LinkId=317598。
         [HttpPost]
-        [Price下拉選單]
+        [Price下拉選單] //採用ActionFilter傳入 下拉選單資料
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ProductId,ProductName,Price,Active,Stock")] Product product)
         {
@@ -84,7 +84,7 @@ namespace MVC5Course.Controllers
             return View(product);
         }
 
-        [Price下拉選單]
+        [Price下拉選單] //採用ActionFilter傳入 下拉選單資料
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -129,7 +129,7 @@ namespace MVC5Course.Controllers
         #region Edit - Model Binding 延遲載入驗證 範例
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Price下拉選單]
+        [Price下拉選單] //採用ActionFilter傳入 下拉選單資料
         public ActionResult Edit(int id) {
             //Bind Include 代表 修改 MVC Model BIND 的特性，只允許填入該值
             //Model Binding 過程：先寫入值->輸入驗證->模型驗證。
