@@ -4,6 +4,9 @@
 
 @{
     ViewBag.Title = "Index";
+    if (IsAjax) {
+        Layout = null;
+    }
 }
 
 <h2>Index</h2>
@@ -60,9 +63,21 @@
 
 </table>
 
+
+
 @{
     //將 IEnumerable Model 轉型 為 IPagedList
     //因 IEnumerable 較為抽象，因此可以轉型為 IPagedList 具象型別
     var pagedListData = Model as IPagedList;
 }
 @Html.PagedListPager(pagedListData, (p) => Url.Action("Index", new { pageNo = p }) )
+
+Ajax分頁：<br/>
+@Html.PagedListPager(pagedListData,
+    (p) => Url.Action("Index", new { pageNo = p }),
+    PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing("divAjaxMain"))
+
+@section Scripts {
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+}
+
