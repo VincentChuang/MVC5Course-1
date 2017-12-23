@@ -4,9 +4,9 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace WebAPI2.Controllers
+namespace WebApi3.Controllers
 {
-    public class HomeController : Controller
+    public class ApiHomeController : Controller
     {
         public ActionResult Index()
         {
