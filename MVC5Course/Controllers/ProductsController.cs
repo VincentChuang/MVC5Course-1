@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using MVC5Course.Models;
 using MVC5Course.ViewModels;
 using MVC5Course.ActionFilters;
+using PagedList;
 
 namespace MVC5Course.Controllers
 {
@@ -16,9 +17,12 @@ namespace MVC5Course.Controllers
     {
         private FabricsEntities db = new FabricsEntities();
 
-        public ActionResult Index()
+        public ActionResult Index(int pageNo = 1)
         {
-            return View(db.Product.Take(10).ToList());
+            var ordered = db.Product.OrderBy(p => p.ProductId);
+            var data = ordered.ToPagedList(pageNo, 10);
+
+            return View(data);
         }
 
         public ActionResult Details(int? id)
