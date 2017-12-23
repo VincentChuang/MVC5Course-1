@@ -43,6 +43,7 @@ using System.Threading.Tasks;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using PagedList;
 <# foreach (var namespaceName in RequiredNamespaces) { #>
 using <#= namespaceName #>;
 <# } #>
@@ -79,7 +80,7 @@ namespace <#= Namespace #>
 <# if (UseAsync) { #>
         public async Task<ActionResult> Index()
 <# } else { #>
-        public ActionResult Index()
+        public ActionResult Index(int pageNo = 1)
 <# } #>
         {
 <#  var includeExpressions = "";
@@ -90,13 +91,13 @@ namespace <#= Namespace #>
 <#		if (UseAsync) { #>
             return View(await <#= entitySetVar #>.ToListAsync());
 <#		} else { #>
-            return View(<#= entitySetVar #>.ToList());
+            return View(<#= entitySetVar #>.OrderBy(p => p.<#= primaryKeyName #>).ToPagedList(pageNo, 10));
 <#		} #>
 <# } else { #>
 <#		if (UseAsync) { #>
             return View(await db.<#= entitySetName #><#= includeExpressions #>.ToListAsync());
 <#		} else { #>
-            return View(db.<#= entitySetName #><#= includeExpressions #>.ToList());
+            return View(db.<#= entitySetName #><#= includeExpressions #>.OrderBy(p => p.<#= primaryKeyName #>).ToPagedList(pageNo, 10));
 <#		} #>
 <# } #>
         }
