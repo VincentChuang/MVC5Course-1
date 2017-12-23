@@ -2,6 +2,11 @@
 
 @{
     //Layout = null;
+
+    if (this.IsAjax == true) {
+        Layout = null;
+    }
+
 }
 
 <!DOCTYPE html>
@@ -20,9 +25,13 @@
         @Html.DisplayFor(m => m)
 
     </div>
-    <p>
-        @Html.ActionLink("Edit", "Edit", new { id = Model.ClientId }) |
-        @Html.ActionLink("Back to List", "Index")
-    </p>
+
+    @if (this.IsAjax == false) {
+        <p>
+            @Html.ActionLink("Edit", "Edit", new { id = Model.ClientId }) |
+            @Html.ActionLink("Back to List", "Index")
+        </p>
+    }
+
 </body>
 </html>
